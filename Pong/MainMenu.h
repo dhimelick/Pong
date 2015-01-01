@@ -19,6 +19,6 @@ public:
 private:
 	MenuResult getMenuResponse(sf::RenderWindow& window);
 	MenuResult handleClick(int x, int y);
-	std::list<MenuItem> _menuItems;
+	std::list<MenuItem> menuItems;
 };
 

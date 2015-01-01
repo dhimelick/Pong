@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "Game.h"
 
-int _tmain(int argc, _TCHAR* argv[])
+int _tmain(int argc, TCHAR* argv[])
 {
 	Game::start();
 

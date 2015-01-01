@@ -28,8 +28,8 @@ MainMenu::MenuResult MainMenu::show(sf::RenderWindow& window)
 	exitButton.rect.height = 177;
 	exitButton.action = Exit;
 
-	_menuItems.push_back(playButton);
-	_menuItems.push_back(exitButton);
+	menuItems.push_back(playButton);
+	menuItems.push_back(exitButton);
 
 	window.draw(sprite);
 	window.display();
@@ -41,15 +41,12 @@ MainMenu::MenuResult MainMenu::handleClick(int x, int y)
 {
 	std::list<MenuItem>::iterator it;
 
-	for (it = _menuItems.begin(); it != _menuItems.end(); it++)
+	for (it = menuItems.begin(); it != menuItems.end(); it++)
 	{
-		sf::Rect<int> menuItemRect = (*it).rect;
-		if (menuItemRect.height + menuItemRect.top > y
-			&& menuItemRect.top < y
-			&& menuItemRect.left < x
-			&& menuItemRect.width + menuItemRect.left > x)
+		sf::Rect<int> menuItemRect = it->rect;
+		if (menuItemRect.contains(x,y))
 		{
-			return (*it).action;
+			return it->action;
 		}
 	}
 

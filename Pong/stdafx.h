@@ -20,3 +20,7 @@
 #include <iostream>
 #include <cassert>
 #include <list>
+
+// debug print
+#include "windows.h"
+#include <..\um\debugapi.h>

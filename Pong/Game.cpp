@@ -5,23 +5,28 @@
 
 void Game::start(void)
 {
-	if(_gameState != Uninitialized)
+	if(gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(1024,768,32),"Pong");
-	_gameState = Game::ShowingSplash;
+	mainWindow.create(sf::VideoMode(1024,768,32), "Pong");
+	mainWindow.setFramerateLimit(60);
+
+	player1.load("images/paddle.png");
+	player1.setPosition(1024 / 2 - 45, 700);
+
+	gameState = Game::ShowingSplash;
 	
 	while(!isExiting())
 	{
 		gameLoop();
 	}
 
-	_mainWindow.close();
+	mainWindow.close();
 }
 
 bool Game::isExiting()
 {
-	if(_gameState == Game::Exiting) 
+	if(gameState == Game::Exiting) 
 		return true;
 	else 
 		return false;
@@ -29,44 +34,43 @@ bool Game::isExiting()
 
 void Game::gameLoop()
 {
-	sf::Event currentEvent;
-	while(_mainWindow.pollEvent(currentEvent))
+	switch(gameState)
 	{
-	
-		switch(_gameState)
+		case Game::ShowingSplash:
 		{
-			case Game::ShowingSplash:
+			showSplashScreen();
+			break;
+		}
+		case Game::ShowingMenu:
+		{
+			showMenu();
+			break;
+		}
+		case Game::Playing:
+		{
+			sf::Event currentEvent;
+			while (mainWindow.pollEvent(currentEvent))
 			{
-				showSplashScreen();
-				break;
-			}
-			case Game::ShowingMenu:
-			{
-				showMenu();
-				break;
-			}
-			case Game::Playing:
-			{
-				sf::Event currentEvent;
-				while (_mainWindow.pollEvent(currentEvent))
-				{
-					_mainWindow.clear(sf::Color(0, 0, 0));
-					_mainWindow.display();
+				mainWindow.clear(sf::Color(0, 0, 0));
+				player1.draw(mainWindow);
+				mainWindow.display();
 
-					if (currentEvent.type == sf::Event::Closed)
+				if (currentEvent.type == sf::Event::Closed)
+				{
+					gameState = Game::Exiting;
+					break;
+				}
+
+				if (currentEvent.type == sf::Event::KeyPressed)
+				{
+					if (currentEvent.key.code == sf::Keyboard::Escape)
 					{
-						_gameState = Game::Exiting;
-					}
-					if (currentEvent.type == sf::Event::KeyPressed)
-					{
-						if (currentEvent.key.code == sf::Keyboard::Escape)
-						{
-							showMenu();
-						}
+						showMenu();
+						break;
 					}
 				}
-				break;
 			}
+			break;
 		}
 	}
 }
@@ -74,24 +78,25 @@ void Game::gameLoop()
 void Game::showSplashScreen()
 {
 	SplashScreen splashScreen;
-	splashScreen.show(_mainWindow);
-	_gameState = Game::ShowingMenu;
+	splashScreen.show(mainWindow);
+	gameState = Game::ShowingMenu;
 }
 
 void Game::showMenu()
 {
 	MainMenu mainMenu;
-	MainMenu::MenuResult result = mainMenu.show(_mainWindow);
+	MainMenu::MenuResult result = mainMenu.show(mainWindow);
 	switch (result)
 	{
 		case MainMenu::Exit:
-			_gameState = Game::Exiting;
+			gameState = Game::Exiting;
 			break;
 		case MainMenu::Play:
-			_gameState = Game::Playing;
+			gameState = Game::Playing;
 			break;
 	}
 }
 
-Game::GameState Game::_gameState = Uninitialized;
-sf::RenderWindow Game::_mainWindow;
+Game::GameState Game::gameState = Uninitialized;
+sf::RenderWindow Game::mainWindow;
+PlayerPaddle Game::player1;
