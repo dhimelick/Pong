@@ -1,10 +1,15 @@
 #pragma once
 #include "PlayerPaddle.h"
+#include "GameObjectManager.h"
 
 class Game
 {
 public:
 	static void start();
+	static float getElapsed();
+
+	const static int SCREEN_WIDTH = 1024;
+	const static int SCREEN_HEIGHT = 768;
 
 private:
 	static bool isExiting();
@@ -18,5 +23,8 @@ private:
 	
 	static GameState gameState;
 	static sf::RenderWindow mainWindow;
-	static PlayerPaddle player1;
+	static sf::Clock clock;
+	static float elapsed;
+	
+	static GameObjectManager gameObjectManager;
 };

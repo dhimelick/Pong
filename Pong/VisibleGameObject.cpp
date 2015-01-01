@@ -2,8 +2,8 @@
 #include "VisibleGameObject.h"
 
 
-VisibleGameObject::VisibleGameObject()
-	: isLoaded(false)
+VisibleGameObject::VisibleGameObject() :
+isLoaded(false)
 {
 }
 
@@ -35,10 +35,34 @@ void VisibleGameObject::draw(sf::RenderWindow& renderWindow)
 	}
 }
 
+void VisibleGameObject::update(float elapsedTime)
+{
+
+}
+
 void VisibleGameObject::setPosition(float x, float y)
 {
 	if (isLoaded)
 	{
 		sprite.setPosition(x, y);
 	}
+}
+
+sf::Vector2f VisibleGameObject::getPosition() const
+{
+	if (isLoaded)
+	{
+		return sprite.getPosition();
+	}
+	return sf::Vector2f();
+}
+
+sf::Sprite& VisibleGameObject::getSprite()
+{
+	return sprite;
+}
+
+bool VisibleGameObject::isObjectLoaded() const
+{
+	return isLoaded;
 }

@@ -9,15 +9,19 @@ void Game::start(void)
 		return;
 
 	mainWindow.create(sf::VideoMode(1024,768,32), "Pong");
-	mainWindow.setFramerateLimit(60);
+	//mainWindow.setFramerateLimit(60);
 
-	player1.load("images/paddle.png");
-	player1.setPosition(1024 / 2 - 45, 700);
+	PlayerPaddle *player1 = new PlayerPaddle();
+	player1->setPosition(1024 / 2 - 45, 700);
+
+	gameObjectManager.add("Paddle1", player1);
 
 	gameState = Game::ShowingSplash;
 	
+	clock.restart();
 	while(!isExiting())
 	{
+		elapsed = clock.restart().asMilliseconds();
 		gameLoop();
 	}
 
@@ -52,7 +56,9 @@ void Game::gameLoop()
 			while (mainWindow.pollEvent(currentEvent))
 			{
 				mainWindow.clear(sf::Color(0, 0, 0));
-				player1.draw(mainWindow);
+				
+				gameObjectManager.drawAll(mainWindow);
+				
 				mainWindow.display();
 
 				if (currentEvent.type == sf::Event::Closed)
@@ -97,6 +103,13 @@ void Game::showMenu()
 	}
 }
 
+float Game::getElapsed()
+{
+	return elapsed;
+}
+
 Game::GameState Game::gameState = Uninitialized;
 sf::RenderWindow Game::mainWindow;
-PlayerPaddle Game::player1;
+GameObjectManager Game::gameObjectManager;
+sf::Clock Game::clock;
+float Game::elapsed;

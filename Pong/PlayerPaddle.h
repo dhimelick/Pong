@@ -7,5 +7,14 @@ class PlayerPaddle :
 public:
 	PlayerPaddle();
 	~PlayerPaddle();
+
+	void update(float elapsedTime);
+	void draw(sf::RenderWindow& renderWindow);
+
+	float getVelocity() const;
+
+private:
+	float velocity;
+	float maxVelocity;
 };
 
