@@ -5,7 +5,7 @@
 
 PlayerPaddle::PlayerPaddle() :
 velocity(0),
-maxVelocity(600.0f)
+maxVelocity(75.0f)
 {
 	load("images/paddle.png");
 	assert(isObjectLoaded());
@@ -30,15 +30,15 @@ float PlayerPaddle::getVelocity() const
 
 void PlayerPaddle::update(float elapsedTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
 	{
-		velocity -= 3;
+		velocity = -maxVelocity;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		velocity += 3;
+		velocity = maxVelocity;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	else
 	{
 		velocity = 0;
 	}
@@ -54,10 +54,16 @@ void PlayerPaddle::update(float elapsedTime)
 
 	sf::Vector2f pos = this->getPosition();
 
-	if (pos.x < getSprite().getLocalBounds().width / 2 || pos.x >(Game::SCREEN_WIDTH - getSprite().getLocalBounds().width / 2))
+	if (pos.x + velocity < 0)
 	{
-		velocity = -velocity;
+		getSprite().setPosition(getSprite().getLocalBounds().width / 2, pos.y);
 	}
-
-	getSprite().move(velocity * elapsedTime, 0);
+	else if (pos.x + velocity > Game::SCREEN_WIDTH)
+	{
+		getSprite().setPosition((Game::SCREEN_WIDTH - getSprite().getLocalBounds().width / 2), pos.y);
+	}
+	else
+	{
+		getSprite().move(velocity * elapsedTime * 10, 0);
+	}
 }

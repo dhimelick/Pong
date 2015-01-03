@@ -13,7 +13,7 @@ public:
 	VisibleGameObject* get(std::string name) const;
 
 	void drawAll(sf::RenderWindow& renderWindow);
-	void updateAll();
+	void updateAll(float elapsed);
 
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
