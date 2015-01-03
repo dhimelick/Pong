@@ -3,19 +3,31 @@
 #include "SplashScreen.h"
 #include "MainMenu.h"
 
+
 void Game::start()
 {
 	if(gameState != Uninitialized)
 		return;
 
+	generator.seed(time(NULL));
+	center = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+
 	mainWindow.create(sf::VideoMode(1024,768,32), "Pong");
 	//mainWindow.setFramerateLimit(60);
 	mainWindow.setVerticalSyncEnabled(true);
 
-	PlayerPaddle *player1 = new PlayerPaddle();
-	player1->setPosition(1024 / 2 - 45, 700);
+	// Create paddle
+	PlayerPaddle* player1 = new PlayerPaddle();
+	player1->setPosition(SCREEN_WIDTH / 2, 700);
 
 	gameObjectManager.add("Paddle1", player1);
+
+	// Create ball
+	GameBall* ball = new GameBall();
+	ball->setPosition(center);
+
+	gameObjectManager.add("Ball", ball);
+
 
 	gameState = Game::ShowingSplash;
 	
@@ -107,8 +119,27 @@ float Game::getElapsed()
 	return elapsed;
 }
 
+sf::Vector2f Game::getCenter()
+{
+	return center;
+}
+
+float Game::getRandomFloat(float lower, float upper)
+{
+	std::uniform_real_distribution<float> distribution(lower, upper);
+	return distribution(generator);
+}
+
+GameObjectManager& Game::getGameObjectManager()
+{
+	return gameObjectManager;
+}
+
+
 Game::GameState Game::gameState = Uninitialized;
 sf::RenderWindow Game::mainWindow;
 GameObjectManager Game::gameObjectManager;
 sf::Clock Game::clock;
 float Game::elapsed;
+sf::Vector2f Game::center;
+std::default_random_engine Game::generator;

@@ -37,7 +37,6 @@ void VisibleGameObject::draw(sf::RenderWindow& renderWindow)
 
 void VisibleGameObject::update(float elapsedTime)
 {
-
 }
 
 void VisibleGameObject::setPosition(float x, float y)
@@ -45,6 +44,14 @@ void VisibleGameObject::setPosition(float x, float y)
 	if (isLoaded)
 	{
 		sprite.setPosition(x, y);
+	}
+}
+
+void VisibleGameObject::setPosition(sf::Vector2f pos)
+{
+	if (isLoaded)
+	{
+		sprite.setPosition(pos);
 	}
 }
 
@@ -65,4 +72,19 @@ sf::Sprite& VisibleGameObject::getSprite()
 bool VisibleGameObject::isObjectLoaded() const
 {
 	return isLoaded;
+}
+
+float VisibleGameObject::getHeight() const
+{
+	return sprite.getLocalBounds().height;
+}
+
+float VisibleGameObject::getWidth() const
+{
+	return sprite.getLocalBounds().width;
+}
+
+sf::Rect<float> VisibleGameObject::getBoundingRect() const
+{
+	return sprite.getLocalBounds();
 }

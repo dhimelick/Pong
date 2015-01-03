@@ -1,8 +1,7 @@
 #pragma once
 #include "VisibleGameObject.h"
 
-class PlayerPaddle :
-	public VisibleGameObject
+class PlayerPaddle : public VisibleGameObject
 {
 public:
 	PlayerPaddle();

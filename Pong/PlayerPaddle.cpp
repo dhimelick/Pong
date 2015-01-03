@@ -7,7 +7,7 @@ PlayerPaddle::PlayerPaddle() :
 velocity(0),
 maxVelocity(75.0f)
 {
-	load("images/paddle.png");
+	load("images/paddle_metal_purple.png");
 	assert(isObjectLoaded());
 
 	getSprite().setOrigin(getSprite().getLocalBounds().width / 2, getSprite().getLocalBounds().height / 2);

@@ -9,6 +9,8 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <random>
+#include <cmath>
 
 // TODO: reference additional headers your program requires here
 #include <SFML/System.hpp>
