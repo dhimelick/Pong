@@ -3,7 +3,7 @@
 #include "SplashScreen.h"
 #include "MainMenu.h"
 
-void Game::start(void)
+void Game::start()
 {
 	if(gameState != Uninitialized)
 		return;
