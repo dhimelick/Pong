@@ -5,7 +5,7 @@
 
 PlayerPaddle::PlayerPaddle() :
 velocity(0),
-maxVelocity(75.0f)
+maxVelocity(750.0f)
 {
 	load("images/paddle_metal_purple.png");
 	assert(isObjectLoaded());
@@ -54,16 +54,18 @@ void PlayerPaddle::update(float elapsedTime)
 
 	sf::Vector2f pos = this->getPosition();
 
-	if (pos.x + velocity < 0)
+	float moveByX = velocity * elapsedTime;
+
+	if (pos.x + moveByX < 0)
 	{
 		getSprite().setPosition(getSprite().getLocalBounds().width / 2, pos.y);
 	}
-	else if (pos.x + velocity > Game::SCREEN_WIDTH)
+	else if (pos.x + moveByX > Game::SCREEN_WIDTH)
 	{
 		getSprite().setPosition((Game::SCREEN_WIDTH - getSprite().getLocalBounds().width / 2), pos.y);
 	}
 	else
 	{
-		getSprite().move(velocity * elapsedTime * 10, 0);
+		getSprite().move(moveByX, 0);
 	}
 }

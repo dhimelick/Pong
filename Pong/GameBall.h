@@ -7,11 +7,13 @@ public:
 	GameBall();
 	virtual ~GameBall();
 	void update(float);
+	void resetBall();
 
 private:
 	float elapsedTimeSinceStart;
 	sf::Vector2f velocity;
 
-	void resetVelocity();
+	float prevX;
+	float prevY;
 };
 

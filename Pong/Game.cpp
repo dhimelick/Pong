@@ -18,7 +18,8 @@ void Game::start()
 
 	// Create paddle
 	PlayerPaddle* player1 = new PlayerPaddle();
-	player1->setPosition(SCREEN_WIDTH / 2, 700);
+	//player1->setPosition(SCREEN_WIDTH / 2, 700);
+	player1->setPosition(300, 700);
 
 	gameObjectManager.add("Paddle1", player1);
 
@@ -79,6 +80,11 @@ void Game::gameLoop()
 					if (currentEvent.key.code == sf::Keyboard::Escape)
 					{
 						showMenu();
+						break;
+					}
+					if (currentEvent.key.code == sf::Keyboard::Space)
+					{
+						dynamic_cast<GameBall*>(gameObjectManager.get("Ball"))->resetBall();
 						break;
 					}
 				}

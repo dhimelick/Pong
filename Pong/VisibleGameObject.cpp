@@ -86,5 +86,5 @@ float VisibleGameObject::getWidth() const
 
 sf::Rect<float> VisibleGameObject::getBoundingRect() const
 {
-	return sprite.getLocalBounds();
+	return sprite.getGlobalBounds();
 }
