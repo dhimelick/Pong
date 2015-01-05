@@ -4,7 +4,7 @@
 class PlayerPaddle : public VisibleGameObject
 {
 public:
-	PlayerPaddle();
+	PlayerPaddle(int playerNum);
 	~PlayerPaddle();
 
 	void update(float elapsedTime);
@@ -15,5 +15,8 @@ public:
 private:
 	float velocity;
 	float maxVelocity;
+	int playerNum;
+	sf::Keyboard::Key leftKey;
+	sf::Keyboard::Key rightKey;
 };
 

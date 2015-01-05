@@ -15,5 +15,6 @@ private:
 
 	float prevX;
 	float prevY;
+
 };
 

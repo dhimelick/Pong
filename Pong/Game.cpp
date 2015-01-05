@@ -21,12 +21,19 @@ void Game::start()
 	//mainWindow.setFramerateLimit(60);
 	mainWindow.setVerticalSyncEnabled(true);
 
-	// Create paddle
-	PlayerPaddle* player1 = new PlayerPaddle();
+	// Create paddle 1
+	PlayerPaddle* player1 = new PlayerPaddle(1);
 	//player1->setPosition(SCREEN_WIDTH / 2, 700);
 	player1->setPosition(300, 700);
 
 	gameObjectManager.add("Paddle1", player1);
+
+	// Create paddle 2
+	PlayerPaddle* player2 = new PlayerPaddle(2);
+	//player1->setPosition(SCREEN_WIDTH / 2, 700);
+	player2->setPosition(350, 68);
+
+	gameObjectManager.add("Paddle2", player2);
 
 	// Create ball
 	GameBall* ball = new GameBall();

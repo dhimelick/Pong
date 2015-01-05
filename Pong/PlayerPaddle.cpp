@@ -3,12 +3,26 @@
 #include "Game.h"
 
 
-PlayerPaddle::PlayerPaddle() :
+PlayerPaddle::PlayerPaddle(int playerNum) :
 velocity(0),
 maxVelocity(750.0f)
 {
-	load("images/paddle_metal_purple.png");
+	if (playerNum == 1)
+	{
+		load("images/paddle_metal_purple.png");
+		rightKey = sf::Keyboard::Key::Right;
+		leftKey = sf::Keyboard::Key::Left;
+	}
+	else if (playerNum == 2)
+	{
+		load("images/paddle_metal_blue.png");
+		rightKey = sf::Keyboard::Key::D;
+		leftKey = sf::Keyboard::Key::A;
+	}
+	
 	assert(isObjectLoaded());
+
+
 
 	getSprite().setOrigin(getSprite().getLocalBounds().width / 2, getSprite().getLocalBounds().height / 2);
 }
@@ -30,11 +44,11 @@ float PlayerPaddle::getVelocity() const
 
 void PlayerPaddle::update(float elapsedTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+	if (sf::Keyboard::isKeyPressed(leftKey))
 	{
 		velocity = -maxVelocity;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	else if (sf::Keyboard::isKeyPressed(rightKey))
 	{
 		velocity = maxVelocity;
 	}
