@@ -83,8 +83,12 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBall.h" />
     <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="IAudioProvider.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PlayerPaddle.h" />
+    <ClInclude Include="ServiceLocator.h" />
+    <ClInclude Include="SFMLSoundProvider.h" />
+    <ClInclude Include="SoundFileCache.h" />
     <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -97,6 +101,9 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="PlayerPaddle.cpp" />
     <ClCompile Include="Pong.cpp" />
+    <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="SFMLSoundProvider.cpp" />
+    <ClCompile Include="SoundFileCache.cpp" />
     <ClCompile Include="SplashScreen.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

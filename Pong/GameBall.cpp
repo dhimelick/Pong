@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameBall.h"
 #include "Game.h"
+#include "ServiceLocator.h"
 
 GameBall::GameBall() :
 elapsedTimeSinceStart(00)
@@ -64,12 +65,9 @@ void GameBall::update(float elapsedTime)
 		sf::Vector2f tr(ballX + ballR, ballY - ballR);
 		sf::Vector2f tl(ballX - ballR, ballY - ballR);
 
-		
-
 		// change frame of reference
 		float refMoveByX = moveByX - paddle1->getVelocity() * elapsedTime;
 		
-
 		// slope
 		float slope = 0;
 		if (refMoveByX != 0)
@@ -77,17 +75,6 @@ void GameBall::update(float elapsedTime)
 			slope = moveByY / refMoveByX;
 		}
 		
-		// ball equation from middle
-		// ball-paddle intersections
-		float intercept = ballY - (slope * ballX);
-		float topIntersect = ballX;
-		if (slope != 0)
-		{
-			topIntersect = (paddleRect.top - intercept) / slope;						// x coord of ball path at y = paddle top edge
-		}
-		//float leftIntersect = slope * paddleRect.left + intercept;							// y coord of ball path at x = paddle left edge
-		//float rightIntersect = slope * (paddleRect.left + paddleRect.width) + intercept;	// y coord of ball path at x = paddle right edge
-
 
 		// ball y-intercepts
 		float interceptBR = br.y - (slope * br.x);
@@ -137,6 +124,7 @@ void GameBall::update(float elapsedTime)
 				newY = paddleRect.top - (moveByY - (paddleRect.top - (ballRect.top + ballRect.height))) - (ballRect.height / 2);
 				velocity.y *= -1;
 				velocity.x += paddle1->getVelocity();
+				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
 			else if (((leftIntersectBR > paddleRect.top && leftIntersectBR <= paddleRect.top + paddleRect.height)
 				|| (leftIntersectTR > paddleRect.top && leftIntersectTR <= paddleRect.top + paddleRect.height))
@@ -147,6 +135,7 @@ void GameBall::update(float elapsedTime)
 				// left bounce
 				newX = paddleRect.left - (refMoveByX - (paddleRect.left - (ballX + ballR))) - ballR;
 				velocity.x = -abs(velocity.x) + paddle1->getVelocity();
+				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
 			else if (((rightIntersectBL > paddleRect.top && rightIntersectBL <= paddleRect.top + paddleRect.height)
 				|| (rightIntersectTL > paddleRect.top && rightIntersectTL <= paddleRect.top + paddleRect.height))
@@ -157,61 +146,10 @@ void GameBall::update(float elapsedTime)
 				// right bounce
 				newX = (paddleRect.left + paddleRect.width) + (refMoveByX - ((ballX - ballR) - (paddleRect.left + paddleRect.width))) + ballR;
 				velocity.x = abs(velocity.x) + paddle1->getVelocity();
+				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
 		}
 		
-
-
-		//else if ((leftIntersectBR > paddleRect.top && leftIntersectBR <= paddleRect.top + paddleRect.height)
-		//	|| (leftIntersectTR > paddleRect.top && leftIntersectTR <= paddleRect.top + paddleRect.height))
-		//{
-		//	// left bounce
-		//	newX = paddleRect.left - (refMoveByX - (paddleRect.left - (ballX + ballR))) - ballR;
-		//	velocity.x = -abs(velocity.x) + paddle1->getVelocity();
-		//}
-		//else if ((rightIntersectBL > paddleRect.top && rightIntersectBL <= paddleRect.top + paddleRect.height)
-		//	|| (rightIntersectTL > paddleRect.top && rightIntersectTL <= paddleRect.top + paddleRect.height))
-		//{
-		//	// right bounce
-		//	newX = (paddleRect.left + paddleRect.width) + (refMoveByX - ((ballX - ballR) - (paddleRect.left + paddleRect.width))) + ballR;
-		//	velocity.x = abs(velocity.x) + paddle1->getVelocity();
-		//}
-
-
-		//sf::Rect<float> thing()
-
-		//if (ballY + moveByY + ballR >= paddleRect.top && ballY + moveByY - ballR <= paddleRect.top + paddleRect.height)
-		//{
-		//	if (ballY + ballR < paddleRect.top
-		//		&& topIntersect >= paddleRect.left
-		//		&& topIntersect <= paddleRect.left + paddleRect.width)
-		//	{
-		//		// top bounce
-		//		newY = paddleRect.top - (moveByY - (paddleRect.top - (ballRect.top + ballRect.height))) - (ballRect.height / 2);
-		//		velocity.y *= -1;
-		//		velocity.x += paddle1->getVelocity();
-		//	}
-		//}
-		//	else if (ballX + ballR + refMoveByX >= paddleRect.left					// right of ball will pass left of paddle
-		//		&& ballX + ballR + refMoveByX < paddleRect.left + paddleRect.width	// right of ball will not pass right of paddle
-		//		&& leftIntersect >= paddleRect.top
-		//		&& leftIntersect <= paddleRect.top + paddleRect.height)				// left intersect contained on paddle left edge
-		//	{
-		//		// left bounce
-		//		newX = paddleRect.left - (refMoveByX - (paddleRect.left - (ballX + ballR))) - ballR;
-		//		velocity.x = -abs(velocity.x) + paddle1->getVelocity();
-		//	}
-		//	else if (ballX + refMoveByX - ballR <= paddleRect.left + paddleRect.width
-		//		&& ballX + refMoveByX + ballR > paddleRect.left
-		//		&& rightIntersect >= paddleRect.top
-		//		&& rightIntersect <= paddleRect.top + paddleRect.height)
-		//	{
-		//		// right bounce
-		//		newX = (paddleRect.left + paddleRect.width) + (refMoveByX - ((ballX - ballR) - (paddleRect.left + paddleRect.width))) + ballR;
-
-		//		velocity.x = abs(velocity.x) + paddle1->getVelocity();
-		//	}
-		//}
 	}
 
 	// check left wall

@@ -2,12 +2,17 @@
 #include "Game.h"
 #include "SplashScreen.h"
 #include "MainMenu.h"
+#include "SFMLSoundProvider.h"
+#include "ServiceLocator.h"
 
 
 void Game::start()
 {
 	if(gameState != Uninitialized)
 		return;
+
+	SFMLSoundProvider soundProvider;
+	ServiceLocator::registerServiceLocator(&soundProvider);
 
 	generator.seed(time(NULL));
 	center = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
