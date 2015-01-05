@@ -14,6 +14,8 @@ void Game::start()
 	SFMLSoundProvider soundProvider;
 	ServiceLocator::registerServiceLocator(&soundProvider);
 
+	ServiceLocator::getAudio()->playSong("audio/Toothless.wav", true);
+
 	generator.seed(time(NULL));
 	center = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 

@@ -168,26 +168,26 @@ void GameBall::update(float elapsedTime)
 				velocity.x += paddle2->getVelocity();
 				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
-			else if (((leftIntersectBR > paddleRect.top && leftIntersectBR <= paddleRect.top + paddleRect.height)
-				|| (leftIntersectTR > paddleRect.top && leftIntersectTR <= paddleRect.top + paddleRect.height))
-				&& ((sqrt(pow(paddleRect.left - br.x, 2) + pow(leftIntersectBR - br.y, 2)) <= (sqrt(pow(refMoveByX, 2) + pow(moveByY, 2))))
-				|| (sqrt(pow(paddleRect.left - tr.x, 2) + pow(leftIntersectTR - tr.y, 2)) <= (sqrt(pow(refMoveByX, 2) + pow(moveByY, 2)))))
-				&& (velocity.x - paddle1->getVelocity() > 0))
+			else if (((leftIntersectBR2 > paddle2Rect.top && leftIntersectBR2 <= paddle2Rect.top + paddle2Rect.height)
+				|| (leftIntersectTR2 > paddle2Rect.top && leftIntersectTR2 <= paddle2Rect.top + paddle2Rect.height))
+				&& ((sqrt(pow(paddle2Rect.left - br.x, 2) + pow(leftIntersectBR2 - br.y, 2)) <= (sqrt(pow(refMoveByX2, 2) + pow(moveByY, 2))))
+				|| (sqrt(pow(paddle2Rect.left - tr.x, 2) + pow(leftIntersectTR2 - tr.y, 2)) <= (sqrt(pow(refMoveByX2, 2) + pow(moveByY, 2)))))
+				&& (velocity.x - paddle2->getVelocity() > 0))
 			{
 				// left bounce
-				newX = paddleRect.left - (refMoveByX - (paddleRect.left - (ballX + ballR))) - ballR;
-				velocity.x = -abs(velocity.x) + paddle1->getVelocity();
+				newX = paddle2Rect.left - (refMoveByX2 - (paddle2Rect.left - (ballX + ballR))) - ballR;
+				velocity.x = -abs(velocity.x) + paddle2->getVelocity();
 				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
-			else if (((rightIntersectBL > paddleRect.top && rightIntersectBL <= paddleRect.top + paddleRect.height)
-				|| (rightIntersectTL > paddleRect.top && rightIntersectTL <= paddleRect.top + paddleRect.height))
-				&& ((sqrt(pow((paddleRect.left + paddleRect.width) - bl.x, 2) + pow(rightIntersectBL - bl.y, 2)) <= (sqrt(pow(refMoveByX, 2) + pow(moveByY, 2))))
-				|| (sqrt(pow((paddleRect.left + paddleRect.width) - tl.x, 2) + pow(rightIntersectTL - tl.y, 2)) <= (sqrt(pow(refMoveByX, 2) + pow(moveByY, 2)))))
-				&& (velocity.x - paddle1->getVelocity() < 0))
+			else if (((rightIntersectBL2 > paddle2Rect.top && rightIntersectBL2 <= paddle2Rect.top + paddle2Rect.height)
+				|| (rightIntersectTL2 > paddle2Rect.top && rightIntersectTL2 <= paddle2Rect.top + paddle2Rect.height))
+				&& ((sqrt(pow((paddle2Rect.left + paddle2Rect.width) - bl.x, 2) + pow(rightIntersectBL2 - bl.y, 2)) <= (sqrt(pow(refMoveByX2, 2) + pow(moveByY, 2))))
+				|| (sqrt(pow((paddle2Rect.left + paddle2Rect.width) - tl.x, 2) + pow(rightIntersectTL2 - tl.y, 2)) <= (sqrt(pow(refMoveByX2, 2) + pow(moveByY, 2)))))
+				&& (velocity.x - paddle2->getVelocity() < 0))
 			{
 				// right bounce
-				newX = (paddleRect.left + paddleRect.width) + (refMoveByX - ((ballX - ballR) - (paddleRect.left + paddleRect.width))) + ballR;
-				velocity.x = abs(velocity.x) + paddle1->getVelocity();
+				newX = (paddle2Rect.left + paddle2Rect.width) + (refMoveByX2 - ((ballX - ballR) - (paddle2Rect.left + paddle2Rect.width))) + ballR;
+				velocity.x = abs(velocity.x) + paddle2->getVelocity();
 				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
 
@@ -241,14 +241,14 @@ void GameBall::update(float elapsedTime)
 	{
 		newX = -moveByX - (distToLeft - ballRect.width / 2) + (ballRect.width / 2);
 		velocity.x *= -1;
-		ServiceLocator::getAudio()->playSound("audio/blip.wav");
+		ServiceLocator::getAudio()->playSound("audio/blop.wav");
 	} 
 	// check right wall
 	else if (getPosition().x + ballRect.width / 2 + moveByX > Game::SCREEN_WIDTH)
 	{
 		newX = Game::SCREEN_WIDTH - (moveByX - (distToRight - ballRect.width / 2)) - (ballRect.width / 2);
 		velocity.x *= -1;
-		ServiceLocator::getAudio()->playSound("audio/blip.wav");
+		ServiceLocator::getAudio()->playSound("audio/blop.wav");
 	}
 
 	prevX = getPosition().x;
@@ -262,5 +262,5 @@ void GameBall::resetBall()
 	elapsedTimeSinceStart = 0;
 	float velX = Game::getRandomFloat(-400, 400);
 	float velY = Game::getRandomFloat(200, 400);
-	velocity = sf::Vector2f(-50, -100);
+	velocity = sf::Vector2f(velX, velY);
 }
