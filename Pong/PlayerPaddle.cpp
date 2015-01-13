@@ -57,24 +57,25 @@ void PlayerPaddle::update(float elapsedTime)
 		velocity = 0;
 	}
 
-	if (velocity > maxVelocity)
-	{
-		velocity = maxVelocity;
-	}
-	else if (velocity < -maxVelocity)
-	{
-		velocity = -maxVelocity;
-	}
+	//if (velocity > maxVelocity)
+	//{
+	//	velocity = maxVelocity;
+	//}
+	//else if (velocity < -maxVelocity)
+	//{
+	//	velocity = -maxVelocity;
+	//}
 
 	sf::Vector2f pos = this->getPosition();
+	float width = getSprite().getLocalBounds().width;
 
 	float moveByX = velocity * elapsedTime;
 
-	if (pos.x + moveByX < 0)
+	if (pos.x - (width / 2) + moveByX < 0)
 	{
-		getSprite().setPosition(getSprite().getLocalBounds().width / 2, pos.y);
+		getSprite().setPosition(width / 2, pos.y);
 	}
-	else if (pos.x + moveByX > Game::SCREEN_WIDTH)
+	else if (pos.x + (width / 2) + moveByX > Game::SCREEN_WIDTH)
 	{
 		getSprite().setPosition((Game::SCREEN_WIDTH - getSprite().getLocalBounds().width / 2), pos.y);
 	}

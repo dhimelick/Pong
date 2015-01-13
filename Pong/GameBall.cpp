@@ -165,7 +165,7 @@ void GameBall::update(float elapsedTime)
 				// bottom bounce
 				newY = (paddle2Rect.top + paddle2Rect.height) + (moveByY - ((paddle2Rect.top + paddle2Rect.height) - ballRect.top)) + (ballRect.height / 2);
 				velocity.y *= -1;
-				velocity.x += paddle2->getVelocity();
+				//velocity.x += paddle2->getVelocity();
 				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
 			else if (((leftIntersectBR2 > paddle2Rect.top && leftIntersectBR2 <= paddle2Rect.top + paddle2Rect.height)
@@ -186,7 +186,7 @@ void GameBall::update(float elapsedTime)
 				&& (velocity.x - paddle2->getVelocity() < 0))
 			{
 				// right bounce
-				newX = (paddle2Rect.left + paddle2Rect.width) + (refMoveByX2 - ((ballX - ballR) - (paddle2Rect.left + paddle2Rect.width))) + ballR;
+				newX = (paddle2Rect.left + paddle2Rect.width) + (-refMoveByX2 - ((ballX - ballR) - (paddle2Rect.left + paddle2Rect.width))) + ballR;
 				velocity.x = abs(velocity.x) + paddle2->getVelocity();
 				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
@@ -207,7 +207,7 @@ void GameBall::update(float elapsedTime)
 				// top bounce
 				newY = paddleRect.top - (moveByY - (paddleRect.top - (ballRect.top + ballRect.height))) - (ballRect.height / 2);
 				velocity.y *= -1;
-				velocity.x += paddle1->getVelocity();
+				//velocity.x += paddle1->getVelocity();
 				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
 			else if (((leftIntersectBR > paddleRect.top && leftIntersectBR <= paddleRect.top + paddleRect.height)
@@ -228,7 +228,7 @@ void GameBall::update(float elapsedTime)
 				&& (velocity.x - paddle1->getVelocity() < 0))
 			{
 				// right bounce
-				newX = (paddleRect.left + paddleRect.width) + (refMoveByX - ((ballX - ballR) - (paddleRect.left + paddleRect.width))) + ballR;
+				newX = (paddleRect.left + paddleRect.width) + (-refMoveByX - ((ballX - ballR) - (paddleRect.left + paddleRect.width))) + ballR;
 				velocity.x = abs(velocity.x) + paddle1->getVelocity();
 				ServiceLocator::getAudio()->playSound("audio/blip.wav");
 			}
